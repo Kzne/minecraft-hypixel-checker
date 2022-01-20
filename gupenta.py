@@ -113,31 +113,44 @@ def main():
     root = tk.Tk()
     root.withdraw()
     print("Guapenta Checker | guap")
-    combos = filedialog.askopenfilename()
-    prox = input("Would You like to use proxies? (y/n) | (HTTP/HTTPS)")
-    if prox == "y":
-        proxies = filedialog.askopenfilename()
+    print("[1] Minercraft Checker\n[2] Proxy Checker")
+    option = input("Enter Option > ")
+    if option == "1":
+        combos = filedialog.askopenfilename()
+        prox = input("Would You like to use proxies? (y/n) | (HTTP/HTTPS)")
+        if prox == "y":
+            proxies = filedialog.askopenfilename()
+            with open(f"{proxies}", "r") as f:
+                for line in f:
+                    cembo=line.strip()
+                    ip=cembo.split(":",1)[0]
+                    port=cembo.split(":",1)[1]
+                    with open(f"{combos}", "r") as f:
+                        for line in f:
+                            os.system("cls")
+                            cembo=line.strip()
+                            user=cembo.split(":",1)[0]
+                            passw=cembo.split(":",1)[1]
+                            pcheck(user, passw, ip, port)
+                            print("VIP:{0}\r".format(VIPc) + "\nVIP+:{0}\r".format(VIP_PLUSc)+"\nMVP:{0}\r".format(MVPc)+"\nMVP+:{0}\r".format(MVP_PLUSc)+"\nFailed:{0}\r".format(FAILEDc)+"\nUnkown:{0}\r".format(UNKOWNc),end='')
+        elif prox == "n":
+            with open(f"{combos}", "r") as f:
+                for line in f:
+                    os.system("cls")
+                    cembo=line.strip()
+                    user=cembo.split(":",1)[0]
+                    passw=cembo.split(":",1)[1]
+                    nopcheck(user,passw)
+                    print("VIP:{0}\r".format(VIPc) + "\nVIP+:{0}\r".format(VIP_PLUSc)+"\nMVP:{0}\r".format(MVPc)+"\nMVP+:{0}\r".format(MVP_PLUSc)+"\nFailed:{0}\r".format(FAILEDc)+"\nUnkown:{0}\r".format(UNKOWNc),end='')
+    elif option == "2":
+        proxies = filedialog.askopenfile()
         with open(f"{proxies}", "r") as f:
             for line in f:
-                cembo=line.strip()
-                ip=cembo.split(":",1)[0]
-                port=cembo.split(":",1)[1]
-                with open(f"{combos}", "r") as f:
-                    for line in f:
-                        os.system("cls")
-                        cembo=line.strip()
-                        user=cembo.split(":",1)[0]
-                        passw=cembo.split(":",1)[1]
-                        pcheck(user, passw, ip, port)
-                        print("VIP:{0}\r".format(VIPc) + "\nVIP+:{0}\r".format(VIP_PLUSc)+"\nMVP:{0}\r".format(MVPc)+"\nMVP+:{0}\r".format(MVP_PLUSc)+"\nFailed:{0}\r".format(FAILEDc)+"\nUnkown:{0}\r".format(UNKOWNc),end='')
-    elif prox == "n":
-        with open(f"{combos}", "r") as f:
-            for line in f:
-                os.system("cls")
-                cembo=line.strip()
-                user=cembo.split(":",1)[0]
-                passw=cembo.split(":",1)[1]
-                nopcheck(user,passw)
-                print("VIP:{0}\r".format(VIPc) + "\nVIP+:{0}\r".format(VIP_PLUSc)+"\nMVP:{0}\r".format(MVPc)+"\nMVP+:{0}\r".format(MVP_PLUSc)+"\nFailed:{0}\r".format(FAILEDc)+"\nUnkown:{0}\r".format(UNKOWNc),end='')
+                r = requests.get("https://api.ipify.org")
+                if r.status_code == 200:
+                    os.system("touch C:\\Users\\Kane\\Documents\\Minecraft Checker\\active.txt")
+                    with open("C:\\Users\\Kane\\Documents\\Minecraft Checker\\active.txt", "w") as f:
+                        f.writelines(line + '\n')
+
 
 main()
